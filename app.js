@@ -1,9 +1,21 @@
 const request = require("request");
 
-const url =
-  "http://api.weatherstack.com/current?access_key=8373aad99f4f7d50ebee509ecc192136&query=San%20Francisco";
+const weatherStackUrl =
+  "http://api.weatherstack.com/current?access_key=8373aad99f4f7d50ebee509ecc192136&query=San%20Francisco&units=f";
 
-request({ url }, (error, response) => {
-  const data = JSON.parse(response.body);
-  console.log(data.current);
+// request({ url: weatherStackUrl, json: true }, (error, { body }) => {
+//   console.log(
+//     `${body.current.weather_descriptions[0]} - It is currently ${body.current.temperature} degrees out. It feels like ${body.current.feelslike} degrees out.`
+//   );
+// });
+
+const mapBoxUrl =
+  "https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=pk.eyJ1IjoieGVub3N0YXIiLCJhIjoiY2tzenBlbXhiMHV1bTJwcnI1eDJldmxhZSJ9.y-fYeE9tl7SlpKGnM66TJA&limit=1";
+
+request({ url: mapBoxUrl, json: true }, (error, { body }) => {
+  const latitude = body.features[0].center[0];
+  const longitude = body.features[0].center[1];
+  console.log(
+    `The coordinates for "${body.features[0].place_name}" is: ${latitude}, ${longitude}.`
+  );
 });
