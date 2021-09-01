@@ -10,14 +10,17 @@ const weatherStackUrl =
 // });
 
 const mapBoxUrl =
-  "https://api.mapox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=pk.eyJ1IjoieGVub3N0YXIiLCJhIjoiY2tzenBlbXhiMHV1bTJwcnI1eDJldmxhZSJ9.y-fYeE9tl7SlpKGnM66TJA&limit=1";
+  "https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=pk.eyJ1IjoieGVub3N0YXIiLCJhIjoiY2tzenBlbXhiMHV1bTJwcnI1eDJldmxhZSJ9.y-fYeE9tl7SlpKGnM66TJA&limit=1";
 
-request({ url: mapBoxUrl, json: true }, (error, { body }) => {
-  console.log("error");
-  const latitude = body.features[0].center[1];
-  const longitude = body.features[0].center[0];
+request({ url: mapBoxUrl, json: true }, (error, response) => {
+  if (error) {
+    console.log("Unable to connect to weather service!");
+  } else {
+    const latitude = response.body.features[0].center[1];
+    const longitude = response.body.features[0].center[0];
 
-  console.log(
-    `The coordinates for "${body.features[0].place_name}" is: ${latitude}, ${longitude}.`
-  );
+    console.log(
+      `The coordinates for "${response.body.features[0].place_name}" is ${latitude}, ${longitude}.`
+    );
+  }
 });
