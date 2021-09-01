@@ -22,7 +22,7 @@ request({ url: mapBoxUrl, json: true }, (error, response) => {
   if (error) {
     console.log("Unable to connect to weather service!");
   } else if (response.body.features.length === 0) {
-    console.log("Unable to find location!");
+    console.log("Unable to find location. Try another search.");
   } else {
     const latitude = response.body.features[0].center[1];
     const longitude = response.body.features[0].center[0];
